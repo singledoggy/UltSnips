@@ -1,0 +1,73 @@
+snippet import "import common_use" b
+# %%
+import pickle
+import glob
+
+import cartopy.crs as ccrs
+import cmaps
+import geopandas as gpd
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import shapely
+import xarray as xr
+from matplotlib.colors import LogNorm
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from shapely.geometry import Point  # 经纬度转换为点
+from shapely.geometry import Polygon
+from xgrads import CtlDescriptor, get_data_projection, open_CtlDataset
+
+# %%
+endsnippet
+
+snippet save "picklesave" b
+pickle_list = [$1]
+# Saving the objects:
+with open('/Users/sam/Documents/data/$2.pkl', 'wb') as f:
+    pickle.dump(pickle_list, f)
+endsnippet
+
+snippet load "picklesave" b
+# Getting back the objects:
+with open('/Users/sam/Documents/data/$1', 'rb') as f:
+    $2 = pickle.load(f)
+endsnippet
+
+snippet fig "fig" b
+plt.rcParams['font.sans-serif']=['Songti SC']
+fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+plt.savefig('',
+            dpi=150, bbox_inches='tight')
+endsnippet
+
+snippet geofig "geofig" b
+plt.rcParams['font.sans-serif']=['Songti SC']
+fig, ax = plt.subplots(1, 1, figsize=(10, 10),
+                       subplot_kw={'projection': crs})
+plt.savefig('',
+            dpi=150, bbox_inches='tight')
+endsnippet
+
+snippet latlon "lat lon grid set" b
+gl = ax.gridlines(draw_labels=True,
+                  x_inline=False, y_inline=False,
+                  color='k', linestyle='dotted', zorder=4)
+gl.top_labels = gl.right_labels = False
+gl.rotate_labels = False
+endsnippet
+
+snippet np.savetxt "numpy" iA
+np.savetxt('$1.csv',a, delimiter=",",fmt='%.2f')
+endsnippet
+
+snippet .to_csv "pandas" iA
+.to_csv('$1.csv',sep=',', float_format='%.2f')
+endsnippet
+
+snippet xr.open_dataset "dataset" i
+xr.open_dataset(
+    '$1',
+    decode_coords="all"
+)
+endsnippet
