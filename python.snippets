@@ -1,9 +1,9 @@
 snippet import "import common_use" b
 # %%
-import pickle
 import glob
 
 import cartopy.crs as ccrs
+from datool.plot import add_label
 import cmaps
 import geopandas as gpd
 import matplotlib as mpl
@@ -21,32 +21,46 @@ from xgrads import CtlDescriptor, get_data_projection, open_CtlDataset
 # %%
 endsnippet
 
-snippet save "picklesave" b
+snippet picksave "picklesave" b
+import pickle
 pickle_list = [$1]
 # Saving the objects:
-with open('/Users/sam/Documents/data/$2.pkl', 'wb') as f:
+with open('./data/$2.pkl', 'wb') as f:
     pickle.dump(pickle_list, f)
 endsnippet
 
-snippet load "picklesave" b
+snippet pickload "picklesave" b
+import pickle
 # Getting back the objects:
-with open('/Users/sam/Documents/data/$1', 'rb') as f:
+with open('./data/$1', 'rb') as f:
     $2 = pickle.load(f)
 endsnippet
 
+snippet dillsave "dillsave" b
+import dill
+dill.dump_session("./data/`!p snip.rv = snip.basename`.pkl")
+endsnippet
+
+snippet dillload "dillload" b
+import dill
+dill.load_session("./data/`!p snip.rv = snip.basename`.pkl")
+endsnippet
+
 snippet fig "fig" b
+plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams["mathtext.default"]='regular'
 plt.rcParams['font.sans-serif']=['Songti SC']
-fig, ax = plt.subplots(1, 1, figsize=(10, 10))
-plt.savefig('',
-            dpi=150, bbox_inches='tight')
+fig, ax = plt.subplots(1, 1, figsize=(6, 6))
+$1
 endsnippet
 
 snippet geofig "geofig" b
+plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams["mathtext.default"]='regular'
 plt.rcParams['font.sans-serif']=['Songti SC']
-fig, ax = plt.subplots(1, 1, figsize=(10, 10),
+fig, ax = plt.subplots(1, 1, figsize=(6, 6),
                        subplot_kw={'projection': crs})
-plt.savefig('',
-            dpi=150, bbox_inches='tight')
+$1
 endsnippet
 
 snippet latlon "lat lon grid set" b
@@ -58,11 +72,11 @@ gl.rotate_labels = False
 endsnippet
 
 snippet np.savetxt "numpy" iA
-np.savetxt('$1.csv',a, delimiter=",",fmt='%.2f')
+np.savetxt('./data/$1.csv',a, delimiter=",",fmt='%.2f')
 endsnippet
 
 snippet .to_csv "pandas" iA
-.to_csv('$1.csv',sep=',', float_format='%.2f')
+.to_csv('./data/$1.csv',sep=',', float_format='%.2f')
 endsnippet
 
 snippet xr.open_dataset "dataset" i
@@ -70,4 +84,13 @@ xr.open_dataset(
     '$1',
     decode_coords="all"
 )
+endsnippet
+
+snippet plt.savefig "expand" b
+plt.savefig('./data/$1',
+            dpi=300, bbox_inches='tight')
+endsnippet
+
+snippet title "title" b
+ax[$1].title.set_text($2)
 endsnippet

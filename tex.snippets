@@ -79,8 +79,8 @@ endsnippet
 
 
 
-snippet \al "alert" w
-\alert{$0}
+snippet \al "alert" i
+\textcolor{red}{$0}
 endsnippet
 
 snippet ^. "degree"  
@@ -133,7 +133,7 @@ snippet ntemp "Basic template" b
 }
 \newpage
 ${2:内容}
-%\bibliography{ref}
+%\bibliography{../ref}
 \end{document}
 endsnippet
 
@@ -206,13 +206,24 @@ $2
 \begin{frame}[allowframebreaks]
 \frametitle{References}
 \tiny
-\bibliography{ppt}
+\bibliography{../ref}
 \end{frame}
 
 \begin{frame}[label=t,standout]{\quad}
 \huge
 Thank you!
 \end{frame}
+\end{document}
+endsnippet
+
+
+snippet standalone "stemp"
+\documentclass[varwidth,border=10pt]{standalone}
+\usepackage{subcaption}
+\usepackage[labelformat=parens,labelsep=quad, skip=3pt]{caption}
+\usepackage{graphicx}
+\begin{document}
+$1
 \end{document}
 endsnippet
 
@@ -236,9 +247,13 @@ snippet ptemp "paper temp" b
 %\keywords{}
 %\end{abstract}
 $3
-\nocite{*}
-\bibliography{ref}
+%\nocite{*}
+\bibliography{../ref}
 \end{document}
+endsnippet
+
+snippet cite "\cite[]{}"
+\cite{${1}} ${0}
 endsnippet
 
 snippet core "compile core" b
@@ -297,8 +312,8 @@ snippet ... "ldots" iA
 endsnippet
 
 snippet tab "Table label" b
-	\caption{${2:caption}}
-	\label{tab:${3:label}}
+\caption{${2:caption}}
+\label{tab:${3:label}}
 endsnippet
 
 snippet fig "Figure environment" b
