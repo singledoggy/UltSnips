@@ -119,6 +119,7 @@ snippet ntemp "Basic template" b
 \documentclass[cn,hazy,blue,14pt,normal,founder]{elegantnote}
 \title{${1:笔记}}
 \usepackage{array}
+\usepackage{chemformula}
 \usepackage{subcaption}
 \captionsetup[subfigure]{labelformat=simple}
 \renewcommand\thesubfigure{(\alph{subfigure})}
@@ -149,6 +150,7 @@ endsnippet
 snippet btemp "beam temp" b
 %!TEX program = xelatex
 \documentclass[10pt]{beamer}
+\usepackage{chemformula}
 \usepackage[authoryear]{gbt7714}
 \usetheme[block=fill, sectionpage=none]{metropolis}
 \useinnertheme{metropolis}
@@ -231,7 +233,7 @@ snippet ptemp "paper temp" b
 %!TEX program = xelatex
 % 完整编译: xelatex -> bibtex -> xelatex -> xelatex
 \documentclass[lang=cn,11pt,a4paper,founder]{elegantpaper}
-
+\usepackage{chemformula}
 \title{$1}
 \author{$2}
 \institute{}
@@ -297,9 +299,12 @@ snippet beg "block" b
 \\end{block}
 endsnippet
 
+snippet \ma "chemical" i
+$\mathrm{$1}$
+endsnippet
 
 snippet \ch "chemical" i
-$\mathrm{$1}$
+\ch{$1}
 endsnippet
 
 snippet tm "titlemath" i
@@ -319,19 +324,19 @@ endsnippet
 snippet fig "Figure environment" b
 \begin{figure}[htpb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{$1}
+	\includegraphics[width=\textwidth]{$1}
 	\caption{$2}
 	\label{fig:$3}
 \end{figure}
 endsnippet
 
 snippet \includegraphics "environment" b
-\includegraphics[width=0.8\textwidth]{$1}
+\includegraphics[width=\textwidth]{$1}
 endsnippet
 
 
 snippet sfig "subfigure" b
-\begin{subfigure}[b]{0.45\textwidth}
+\begin{subfigure}[b]{0.5\textwidth}
 \includegraphics[width=\textwidth]{$1}
 \caption{$2}
 \label{fig:$3}
@@ -367,9 +372,9 @@ else:
 endsnippet
 
 snippet dm "Math" wA
-\begin{equation*}
+\begin{equation}
 ${1:${VISUAL}}
-\end{equation*} $0
+\end{equation} $0
 endsnippet
 
 
@@ -894,4 +899,21 @@ snippet DD "D" iA
 \mathbb{D}
 endsnippet
 
+# escape character
+snippet \~ "esacape" iA
+\textasciitilde
+endsnippet
+
+snippet \^ "esacape" iA
+\textasciicircum
+endsnippet
+
+
+snippet \\ "esacape" i
+\textbackslash
+endsnippet
+ 
+snippet ref "reference" i
+~\ref{$0}
+endsnippet
 # vim:ft=snippets

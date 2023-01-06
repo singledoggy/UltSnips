@@ -105,8 +105,8 @@ snippet '```' "code" b
 endsnippet
 
 snippet tab "add tab" b
-{% tabs {$1:name} %}
-<!-- tab $2 -->
+{% tabs %}
+<!-- tab $1 -->
 $0
 <!-- endtab -->
 {% endtabs %}
@@ -127,6 +127,10 @@ snippet block "note" b
 
 {% endnote %}
 endsnippet 
+
+snippet douban "douban" bA
+{% douban ${1:movie|book|music} $0 %}
+endsnippet
 #############
 ### Math ####
 #############
