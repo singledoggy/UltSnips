@@ -80,17 +80,15 @@ endsnippet
 
 snippet cq "quote" b
 {% cq %}
+$1
 {% endcq %}
+$0
 endsnippet
 
 snippet gp "grouppicture" b
 {% grouppicture $1 %}
 
 {% endgrouppicture %}
-endsnippet
-
-snippet > "quote" A
-> $0  
 endsnippet
 
 
@@ -116,7 +114,7 @@ snippet '<[a-z]+[0–9]*' "Generic HTML tag builder multi-line" r
 <`!p snip.rv = match.group()[1:]`$1> $0 </`!p snip.rv = match.group()[1:]`>
 endsnippet
 
-
+ 
 snippet kbd "HTML kbd tag"
 <kbd>$1</kbd>
 endsnippet
@@ -129,7 +127,20 @@ snippet block "note" b
 endsnippet 
 
 snippet douban "douban" bA
-{% douban ${1:movie|book|music} $0 %}
+{% douban movie${1:book|music} $1 %}$0
+endsnippet
+
+snippet lg "linkgrid" b
+{% lg [image] [delimiter] [comment] %}
+Theme NexT | https://theme-next.js.org/ | Stay Simple. Stay NexT. | /images/apple-touch-icon-next.png
+{% endlg %}
+endsnippet
+
+snippet bili "bilb tag" b
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+$1
+</div>
+$0
 endsnippet
 #############
 ### Math ####

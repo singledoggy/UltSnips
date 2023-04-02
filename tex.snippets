@@ -317,8 +317,15 @@ snippet ... "ldots" iA
 endsnippet
 
 snippet tab "Table label" b
+\begin{table}[htbp]
 \caption{${2:caption}}
 \label{tab:${3:label}}
+\centering
+\resizebox{\textwidth}{!}{%
+$4
+}
+\end{table}
+$0
 endsnippet
 
 snippet fig "Figure environment" b
@@ -328,6 +335,7 @@ snippet fig "Figure environment" b
 	\caption{$2}
 	\label{fig:$3}
 \end{figure}
+$0
 endsnippet
 
 snippet \includegraphics "environment" b
@@ -379,10 +387,11 @@ endsnippet
 
 
 
+context "math()"
 snippet ali "Align" bA
-\begin{align*}
+\begin{aligned}
 	${1:${VISUAL}}
-\end{align*}
+\end{aligned}
 endsnippet
 
 
@@ -390,6 +399,23 @@ context "math()"
 snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
+
+context "math()"
+snippet bf "unit mug" i
+\mathbf{}
+endsnippet
+
+context "math()"
+snippet mugm "unit mug" iA
+\mu g\cdot m^{-3}
+endsnippet
+
+context "math()"
+snippet mgm "unit mg" iA
+mg\cdot m^{-3}
+endsnippet
+
+
 
 snippet / "Fraction" i
 \\frac{${VISUAL}}{$1}$0
@@ -851,13 +877,6 @@ snippet SI "SI" iA
 \SI{$1}{$2}
 endsnippet
 
-snippet bigfun "Big function" iA
-\begin{align*}
-	$1: $2 &\longrightarrow $3 \\\\
-	$4 &\longmapsto $1($4) = $0
-.\end{align*}
-endsnippet
-
 snippet cvec "column vector" iA
 \begin{pmatrix} ${1:x}_${2:1}\\\\ \vdots\\\\ $1_${2:n} \end{pmatrix}
 endsnippet
@@ -891,14 +910,6 @@ Let $\Omega \subset \C$ be open.
 endsnippet
 
 
-snippet HH "H" iA
-\mathbb{H}
-endsnippet
-
-snippet DD "D" iA
-\mathbb{D}
-endsnippet
-
 # escape character
 snippet \~ "esacape" iA
 \textasciitilde
@@ -913,7 +924,17 @@ snippet \\ "esacape" i
 \textbackslash
 endsnippet
  
-snippet ref "reference" i
-~\ref{$0}
+snippet \tref "reference" iA
+~\ref{tab:$1} $0
 endsnippet
+
+snippet \fref "reference" iA
+~\ref{fig:$1} $0
+endsnippet
+
+snippet \eref "eqreference" iA
+~\eqref{eq:$1} $0
+endsnippet
+
+
 # vim:ft=snippets

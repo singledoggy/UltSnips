@@ -21,6 +21,14 @@ from xgrads import CtlDescriptor, get_data_projection, open_CtlDataset
 # %%
 endsnippet
 
+snippet numpy "np" bA
+import numpy as np
+endsnippet
+
+snippet pandas "pd" bA
+import pandas as pd
+endsnippet
+
 snippet picksave "picklesave" b
 import pickle
 pickle_list = [$1]
@@ -45,6 +53,16 @@ snippet dillload "dillload" b
 import dill
 dill.load_session("./data/`!p snip.rv = snip.basename`.pkl")
 endsnippet
+
+
+snippet pickle "dillsave" b
+import dill 
+with open("./data/`!p snip.rv = snip.basename`.pkl'", 'wb') as f:
+	list= [$1]
+	dill.dump(data, f)
+$0
+endsnippet
+
 
 snippet fig "fig" b
 plt.rcParams['axes.unicode_minus'] = False
