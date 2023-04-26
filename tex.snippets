@@ -321,9 +321,7 @@ snippet tab "Table label" b
 \caption{${2:caption}}
 \label{tab:${3:label}}
 \centering
-\resizebox{\textwidth}{!}{%
-$4
-}
+
 \end{table}
 $0
 endsnippet
@@ -402,7 +400,7 @@ endsnippet
 
 context "math()"
 snippet bf "unit mug" i
-\mathbf{}
+\mathbf{${VISUAL}}
 endsnippet
 
 context "math()"
