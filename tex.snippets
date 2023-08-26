@@ -79,8 +79,8 @@ endsnippet
 
 
 
-snippet \al "alert" i
-\textcolor{red}{$0}
+snippet \al "alert" iA
+\textbf{\textcolor{light_red}{$0}}
 endsnippet
 
 snippet ^. "degree"  
@@ -93,9 +93,19 @@ endsnippet
 
 snippet bcol "columns" b
 \begin{columns}
-    \column{0.5\textwidth}
-    \centering
+	\begin{column}{0.5\textwidth}
+	\centering
+	$1
+	\end{column}
+	\begin{column}{0.5\textwidth}
+	\centering
+	$2	
+	\end{column}
 \end{columns}
+endsnippet
+
+snippet brule "columns" b
+\noindent\rule[0ex]{\linewidth}{0.2pt}
 endsnippet
 
 snippet col "columns2" b
@@ -116,7 +126,7 @@ endsnippet
 
 snippet ntemp "Basic template" b
 %!TEX program = xelatex
-\documentclass[cn,hazy,blue,14pt,normal,founder]{elegantnote}
+\documentclass[cn,hazy,blue,14pt,normal]{elegantnote}
 \title{${1:笔记}}
 \usepackage{array}
 \usepackage{chemformula}
@@ -124,100 +134,155 @@ snippet ntemp "Basic template" b
 \captionsetup[subfigure]{labelformat=simple}
 \renewcommand\thesubfigure{(\alph{subfigure})}
 \author{韩雨阳}
-\date{\zhtoday}
+\date{\today}
 
 \graphicspath{{./fig/}}
 \begin{document}
 \maketitle
-\centerline{
-  \includegraphics[width=0.7\textwidth]{{/Users/sam/Documents/minami.png}}
-}
+\centerline{\includegraphics[width=0.7\textwidth]{{/Users/sam/Documents/minami.png}}}
 \newpage
-${2:内容}
 %\bibliography{../ref}
 \end{document}
 endsnippet
 
-snippet toc "toc" b
-\begin{frame}{Table of contents}
-\setbeamertemplate{section in toc}[sections numbered]
-
-\tableofcontents[currentsection, subsectionstyle=show/shaded/hide]
-\end{frame}
-endsnippet
-
-
-snippet btemp "beam temp" b
+snippet btemp "Beamer template" b
 %!TEX program = xelatex
-\documentclass[10pt]{beamer}
-\usepackage{chemformula}
-\usepackage[authoryear]{gbt7714}
-\usetheme[block=fill, sectionpage=none]{metropolis}
-\useinnertheme{metropolis}
-%\useoutertheme{infolines}
-%\setbeamertemplate{headline}{}
+\documentclass[aspectratio=169]{ctexbeamer}
 \usepackage{appendixnumberbeamer}
-\graphicspath{{./fig/}}
-\usepackage{booktabs}
-\usepackage[scale=2]{ccicons}
-% logo of my university
-\titlegraphic{%
-  \begin{picture}(0,0)
-    \put(305,-115){\makebox(0,0)[rt]{\includegraphics[width=2cm,height=2cm]{logo.png}}}
-  \end{picture}}
-\usepackage{pgfplots}
-\usepgfplotslibrary{dateplot}
-
-\usepackage{caption}
-\usepackage{subcaption}
+\usepackage{amsmath,amsthm}
+\usepackage{annotate-equations}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{wasysym}
 \usepackage{ragged2e}
-\captionsetup[subfigure]{labelformat=simple}
-\renewcommand\thesubfigure{(\alph{subfigure})}
-\setbeamertemplate{caption}[numbered]
-\usepackage{xeCJK}
-\setmainfont{Times New Roman} 
-\setCJKmainfont{FZShuSong-Z01}
-\setCJKsansfont{FZHei-B01}
-\setCJKmonofont{FZFangSong-Z02}
-%\setCJKmainfont[BoldFont=STZhongsong, ItalicFont=STKaiti]{STSong}
-%\setCJKsansfont[BoldFont=STHeiti]{STXihei}
-%\setCJKmonofont{STFangsong}
-\title{$1}
-\subtitle{}
-\author{韩雨阳} 
-\institute{中国科学院大气物理研究所}
+\usepackage{chemformula}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {./graphics/} }
+%\usepackage{enumitem}
+\usepackage{pifont}
+
+%========================================================================
+% font and theme
+\definecolor{light_red}{RGB}{209,105,81}
+\definecolor{fair_red}{RGB}{237,27,47}
+\definecolor{light_green}{RGB}{58,181,75}
+\definecolor{thick_blue}{RGB}{5,43,108}
+\definecolor{fair_blue}{RGB}{0,112,192}
+\definecolor{light_blue}{RGB}{0,153,228}
+\definecolor{light_brown}{RGB}{132, 60, 11}
+\colorlet{my_theme}{light_red}
+
+\setbeamertemplate{frametitle}[default][center]
+\setbeamertemplate{navigation symbols}{}
+\setbeamerfont{footline}{series=\bfseries}
+\setbeamertemplate{footline}[frame number]
+
+
+\setbeamercolor{frametitle}{fg=my_theme} % 将color_name替换为你想要的颜色名称
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamercolor{title}{fg=my_theme}
+
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{itemize item}{fg=black}
+
+\setbeamercolor{block body}{fg = black, bg = white}
+\setbeamercolor{block body example}{fg = black, bg = white}
+\setbeamertemplate{blocks}[rounded][shadow] 
+% looks better but can't convert to ppt
+% \setbeamertemplate{blocks}[rounded]
+
+\setbeamercolor{block title}{fg = black, bg = light_blue!40}
+\setbeamercolor{block title example}{fg = black, bg = orange!40}
+\setbeamercolor{block title alerted}{fg = black, bg = light_red!40}
+
+
+\usepackage{tikz}
+\newcommand{\topline}{%
+\tikz[remember picture,overlay] {%
+\draw[gray, thick] ([xshift=1cm,yshift=-1.1cm]current page.north west)
+             -- ([xshift=-1cm,yshift=-1.1cm,xshift=\paperwidth]current page.north west);}}
+
+
+%========================================================================
+
+% Information to be included in the title page:
+\title{Co-occurrence of drought and  \ch{O3} Pollution in China}
+
+\author{\textcolor{thick_blue}{\textbf{Yuyang Han}}}
+
+\institute{Hong Kong Baptist University}
+
 \date{\today}
-%\titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.png}}
+
+\titlegraphic{
+\begin{tikzpicture}[overlay,remember picture]
+\node[left=0.15cm] at (current page.21){
+		\includegraphics[height=3cm]{{graphics/HKBU_logo.png}}
+
+};
+\end{tikzpicture}
+}
+%========================================================================
+\setbeamertemplate{section in toc}{%
+     \inserttocsectionnumber. \inserttocsection\ \par}
+
+\setbeamerfont{section in toc}{size=\Large}
+\setbeamercolor{section in toc}{fg=my_theme}
+
+
 \begin{document}
+
+%title page
+\begin{frame}[plain,noframenumbering]
+\vspace{1cm}  
 \maketitle
-
-\begingroup
-\setbeamertemplate{headline}{}
-%\addtobeamertemplate{frametitle}{\vspace*{-0.9\baselineskip}}{}
-\begin{frame}{目录}
-  \setbeamertemplate{section in toc}[sections numbered]
-  \tableofcontents[hideallsubsections]
 \end{frame}
-\endgroup
 
-$2
+
+\begin{frame}[c]
+\frametitle{\textbf{Outline}}
+\topline
+\setlength{\leftskip}{3em}
+\tableofcontents
+\end{frame} 
+
+
+
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+\topline
+
+\end{frame}
+
+
+
+\begin{frame}[plain,noframenumbering]
+\vspace{2em}
+\centering\huge {\textbf{\color{my_theme}Thanks for your attention!}}
+\end{frame}
 
 \appendix
-\setbeamertemplate{headline}{}
-%\addtobeamertemplate{frametitle}{\vspace*{-0.9\baselineskip}}{}
-\begin{frame}[allowframebreaks]
-\frametitle{References}
-\tiny
-\bibliography{../ref}
+
+\begin{frame}
+\frametitle{Reference}
+\topline
 \end{frame}
 
-\begin{frame}[label=t,standout]{\quad}
-\huge
-Thank you!
-\end{frame}
+
 \end{document}
+
+
 endsnippet
 
+
+snippet bfoot "footnote" iA
+\footnote{\scriptsize{\color{black!75}{${1:footnote}}}}
+endsnippet
 
 snippet standalone "stemp"
 \documentclass[varwidth,border=10pt]{standalone}
@@ -229,46 +294,22 @@ $1
 \end{document}
 endsnippet
 
-snippet ptemp "paper temp" b 
-%!TEX program = xelatex
-% 完整编译: xelatex -> bibtex -> xelatex -> xelatex
-\documentclass[lang=cn,11pt,a4paper,founder]{elegantpaper}
-\usepackage{chemformula}
-\title{$1}
-\author{$2}
-\institute{}
-% 本文档命令
-\usepackage{array}
-\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
-
-\begin{document}
-
-\maketitle
-
-%\begin{abstract}
-%\keywords{}
-%\end{abstract}
-$3
-%\nocite{*}
-\bibliography{../ref}
-\end{document}
-endsnippet
-
 snippet cite "\cite[]{}"
 \cite{${1}} ${0}
 endsnippet
 
 snippet core "compile core" b
-%!TEX program = ${1:xelatex}
+%!TEX program = xelatex
 endsnippet
 
 snippet # "section" b
 \section{$0}
 endsnippet
 
-snippet frame "beamerfame" b
-\begin{frame}[c]
+snippet frame "beamerfame" bA
+\begin{frame}
 	\frametitle{$1}
+	\topline
 	$2
 \end{frame}
 endsnippet
@@ -287,21 +328,6 @@ snippet beg "begin{} / end{}" bA
 \\end{$1}
 endsnippet
 
-#snippet frame "frame" b
-#\\begin{frame}{$1}
-#$0
-#\\end{frame}
-#endsnippet
-
-snippet beg "block" b
-\\begin{block}{$1}
-	$0
-\\end{block}
-endsnippet
-
-snippet \ma "chemical" i
-$\mathrm{$1}$
-endsnippet
 
 snippet \ch "chemical" i
 \ch{$1}
@@ -336,7 +362,7 @@ snippet fig "Figure environment" b
 $0
 endsnippet
 
-snippet \includegraphics "environment" b
+snippet bfig "environment" b
 \includegraphics[width=\textwidth]{$1}
 endsnippet
 
@@ -482,10 +508,12 @@ snip.rv = subprocess.check_output(['wolframscript', '-code', code])
 `
 endsnippet
 
+context "math()"
 snippet == "equals" iA
 &= $1 \\\\
 endsnippet
 
+context "math()"
 snippet != "equals" iA
 \neq 
 endsnippet
@@ -871,9 +899,6 @@ snippet case "cases" wA
 \end{cases}
 endsnippet
 
-snippet SI "SI" iA
-\SI{$1}{$2}
-endsnippet
 
 snippet cvec "column vector" iA
 \begin{pmatrix} ${1:x}_${2:1}\\\\ \vdots\\\\ $1_${2:n} \end{pmatrix}
@@ -922,17 +947,25 @@ snippet \\ "esacape" i
 \textbackslash
 endsnippet
  
-snippet \tref "reference" iA
-~\ref{tab:$1} $0
+snippet tref "reference" iA
+~\ref{tab:$1}$0
 endsnippet
 
-snippet \fref "reference" iA
-~\ref{fig:$1} $0
+snippet fref "reference" iA
+~\ref{fig:$1}$0
 endsnippet
 
-snippet \eref "eqreference" iA
-~\eqref{eq:$1} $0
+snippet eref "eqreference" iA
+~\eqref{eq:$1}$0
 endsnippet
 
 
+context "math()"
+snippet eqmark "eqreference" iA
+\eqnmarkbox[blue]{node}{}
+endsnippet
+
+snippet eqanno "eqreference" iA
+\annotate[yshift=-1em]{below, label below}{node}{}
+endsnippet
 # vim:ft=snippets

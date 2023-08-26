@@ -1,12 +1,15 @@
-snippet numpy "np" bA
-import numpy as np
+snippet	warning "warning" bA
+import warnings
+warnings.filterwarnings('ignore')
 endsnippet
 
-snippet pandas "pd" bA
+snippet ini "pd" b
 import pandas as pd
+import numpy as np
+import xarray as xr
 endsnippet
 
-snippet picksave "picklesave" b
+snippet picklesave "picklesave" b
 import pickle
 pickle_list = [$1]
 # Saving the objects:
@@ -14,7 +17,7 @@ with open('./data/$2.pkl', 'wb') as f:
     pickle.dump(pickle_list, f)
 endsnippet
 
-snippet pickload "picklesave" b
+snippet pickleload "picklesave" b
 import pickle
 # Getting back the objects:
 with open('./data/$1', 'rb') as f:
@@ -32,30 +35,29 @@ dill.load_session("./data/`!p snip.rv = snip.basename`.pkl")
 endsnippet
 
 
-snippet pickle "dillsave" b
-import dill 
-with open("./data/`!p snip.rv = snip.basename`.pkl'", 'wb') as f:
-	list= [$1]
-	dill.dump(data, f)
-$0
-endsnippet
-
-
 snippet fig "fig" b
-plt.rcParams['axes.unicode_minus'] = False
-plt.rcParams["mathtext.default"]='regular'
-plt.rcParams['font.sans-serif']=['Songti SC']
-fig, ax = plt.subplots(1, 1, figsize=(6, 6))
-$1
+import proplot as pplt
+# plt.rcParams['axes.unicode_minus'] = False
+# plt.rcParams["mathtext.default"]='regular'
+# plt.rcParams['font.sans-serif']=['Songti SC']
+fig, axs = pplt.subplots(ncols=1, nrows=1, figwidth=5, span=False)
+axs.format(
+    suptitle='',
+    xlabel='xlabel', ylabel='ylabel', abc=True
+)
 endsnippet
 
 snippet geofig "geofig" b
-plt.rcParams['axes.unicode_minus'] = False
-plt.rcParams["mathtext.default"]='regular'
-plt.rcParams['font.sans-serif']=['Songti SC']
-fig, ax = plt.subplots(1, 1, figsize=(6, 6),
-                       subplot_kw={'projection': crs})
-$1
+import proplot as pplt
+# plt.rcParams['axes.unicode_minus'] = False
+# plt.rcParams["mathtext.default"]='regular'
+# plt.rcParams['font.sans-serif']=['Songti SC']
+fig, axs = pplt.subplots(ncols=1, nrows=1, figwidth=5, span=False,
+						 proj=proj)
+axs.format(
+    suptitle='',
+    xlabel='xlabel', ylabel='ylabel', abc=True
+
 endsnippet
 
 snippet latlon "lat lon grid set" b
@@ -86,6 +88,10 @@ plt.savefig('./data/$1',
             dpi=300, bbox_inches='tight')
 endsnippet
 
-snippet title "title" b
-ax[$1].title.set_text($2)
+snippet xr.open_mfdataset "expand" i
+xr.open_mfdataset(paths, combine='by_coords')
+endsnippet
+
+snippet xr.save_mfdataset "expand" i
+xr.save_mfdataset(datasets=datasets, paths=paths)
 endsnippet
