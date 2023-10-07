@@ -126,10 +126,12 @@ endsnippet
 
 snippet ntemp "Basic template" b
 %!TEX program = xelatex
-\documentclass[cn,hazy,blue,14pt,normal]{elegantnote}
+\documentclass[cn,mode=hazy,sakura,14pt,normal,citestyle=authoryear]{elegantnote}
 \title{${1:笔记}}
 \usepackage{array}
 \usepackage{chemformula}
+\usepackage{tcolorbox}
+\tcbuselibrary{most}
 \usepackage{subcaption}
 \captionsetup[subfigure]{labelformat=simple}
 \renewcommand\thesubfigure{(\alph{subfigure})}
@@ -139,32 +141,40 @@ snippet ntemp "Basic template" b
 \graphicspath{{./fig/}}
 \begin{document}
 \maketitle
-\centerline{\includegraphics[width=0.7\textwidth]{{/Users/sam/Documents/minami.png}}}
+\centerline{\includegraphics[width=0.7\textwidth]{/Users/sam/Documents/minami.png}}
+
+\newtcbtheorem[number within=section]{block}{}%
+  {colback=green!5,colframe=cyan,fonttitle=\bfseries}{th}
+
 \newpage
-%\bibliography{../ref}
+\printbibliography[heading=bibintoc, title=\ebibname]
 \end{document}
 endsnippet
 
 snippet btemp "Beamer template" b
 %!TEX program = xelatex
 \documentclass[aspectratio=169]{ctexbeamer}
+%{{{ Packages
+\usepackage{tikz}
 \usepackage{appendixnumberbeamer}
 \usepackage{amsmath,amsthm}
+\usepackage{booktabs}
 \usepackage{annotate-equations}
 \usepackage{amssymb}
 \usepackage{bbm}
 \usepackage{amsfonts}
 \usepackage{wasysym}
-\usepackage{ragged2e}
 \usepackage{chemformula}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \graphicspath{ {./graphics/} }
 %\usepackage{enumitem}
 \usepackage{pifont}
+\usepackage{ragged2e}
+%}}}
 
-%========================================================================
-% font and theme
+%{{{ theme
+
 \definecolor{light_red}{RGB}{209,105,81}
 \definecolor{fair_red}{RGB}{237,27,47}
 \definecolor{light_green}{RGB}{58,181,75}
@@ -180,7 +190,8 @@ snippet btemp "Beamer template" b
 \setbeamertemplate{footline}[frame number]
 
 
-\setbeamercolor{frametitle}{fg=my_theme} % 将color_name替换为你想要的颜色名称
+\setbeamercolor{frametitle}{fg=my_theme} 
+% 将color_name替换为你想要的颜色名称
 \setbeamerfont{frametitle}{series=\bfseries}
 \setbeamerfont{title}{series=\bfseries}
 \setbeamercolor{title}{fg=my_theme}
@@ -198,18 +209,20 @@ snippet btemp "Beamer template" b
 \setbeamercolor{block title example}{fg = black, bg = orange!40}
 \setbeamercolor{block title alerted}{fg = black, bg = light_red!40}
 
-
-\usepackage{tikz}
-\newcommand{\topline}{%
-\tikz[remember picture,overlay] {%
+\newcommand{\topline}{
+\tikz[remember picture,overlay] {
 \draw[gray, thick] ([xshift=1cm,yshift=-1.1cm]current page.north west)
-             -- ([xshift=-1cm,yshift=-1.1cm,xshift=\paperwidth]current page.north west);}}
+             -- ([xshift=-1cm,yshift=-1.1cm,xshift=\paperwidth]current page.north west);}
+}
+\setbeamertemplate{section in toc}{
+     \inserttocsectionnumber. \inserttocsection\ \par}
+\setbeamerfont{section in toc}{size=\Large}
+\setbeamercolor{section in toc}{fg=my_theme}
 
+%}}}
 
-%========================================================================
-
-% Information to be included in the title page:
-\title{Co-occurrence of drought and  \ch{O3} Pollution in China}
+% {{{ title author
+\title{Recent progress}
 
 \author{\textcolor{thick_blue}{\textbf{Yuyang Han}}}
 
@@ -221,21 +234,13 @@ snippet btemp "Beamer template" b
 \begin{tikzpicture}[overlay,remember picture]
 \node[left=0.15cm] at (current page.21){
 		\includegraphics[height=3cm]{{graphics/HKBU_logo.png}}
-
 };
 \end{tikzpicture}
 }
-%========================================================================
-\setbeamertemplate{section in toc}{%
-     \inserttocsectionnumber. \inserttocsection\ \par}
-
-\setbeamerfont{section in toc}{size=\Large}
-\setbeamercolor{section in toc}{fg=my_theme}
-
+% }}} 
 
 \begin{document}
 
-%title page
 \begin{frame}[plain,noframenumbering]
 \vspace{1cm}  
 \maketitle
@@ -857,10 +862,6 @@ snippet nnn "bigcap" iA
 \bigcap_{${1:i \in ${2: I}}} $0
 endsnippet
 
-snippet OO "emptyset" iA
-\O
-endsnippet
-
 snippet RR "real" iA
 \R
 endsnippet
@@ -969,3 +970,9 @@ snippet eqanno "eqreference" iA
 \annotate[yshift=-1em]{below, label below}{node}{}
 endsnippet
 # vim:ft=snippets
+
+snippet foldp "fold paragraph" w
+% {{{ ${1:note}
+
+%}}}
+endsnippet

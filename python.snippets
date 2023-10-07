@@ -1,3 +1,6 @@
+snippet ipdb "ipdb" bA
+import ipdb; ipdb.set_trace()
+endsnippet
 snippet	warning "warning" bA
 import warnings
 warnings.filterwarnings('ignore')
@@ -37,26 +40,26 @@ endsnippet
 
 snippet fig "fig" b
 import proplot as pplt
+import matplotlib.pyplot as plt
 # plt.rcParams['axes.unicode_minus'] = False
 # plt.rcParams["mathtext.default"]='regular'
 # plt.rcParams['font.sans-serif']=['Songti SC']
-fig, axs = pplt.subplots(ncols=1, nrows=1, figwidth=5, span=False)
+fig, axs = pplt.subplots(ncols=1, nrows=1, figwidth=5,
+                         journal='pnas1', )
 axs.format(
-    suptitle='',
-    xlabel='xlabel', ylabel='ylabel', abc=True
+    suptitle='', xlabel='xlabel', ylabel='ylabel', abc=True,
 )
 endsnippet
 
 snippet geofig "geofig" b
 import proplot as pplt
+import matplotlib.pyplot as plt
+pplt.rc['reso'] = 'lo'  # 'lo', 'med', 'hi', 'x-hi', or 'xx-hi'
 # plt.rcParams['axes.unicode_minus'] = False
 # plt.rcParams["mathtext.default"]='regular'
 # plt.rcParams['font.sans-serif']=['Songti SC']
-fig, axs = pplt.subplots(ncols=1, nrows=1, figwidth=5, span=False,
-						 proj=proj)
-axs.format(
-    suptitle='',
-    xlabel='xlabel', ylabel='ylabel', abc=True
+fig, axs = pplt.subplots(ncols=1, nrows=1,
+                         journal='pnas1', proj=proj,)
 
 endsnippet
 
@@ -84,8 +87,12 @@ xr.open_dataset(
 endsnippet
 
 snippet plt.savefig "expand" b
-plt.savefig('./data/$1',
+plt.savefig('./figure/$1',
             dpi=300, bbox_inches='tight')
+endsnippet
+
+snippet fig.save "expand" b
+fig.save('./figure/.pdf')
 endsnippet
 
 snippet xr.open_mfdataset "expand" i
