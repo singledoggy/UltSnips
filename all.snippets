@@ -41,6 +41,28 @@ snip += box[3]`
 $0
 endsnippet
 
+
+snippet line "line break" b
+`!p
+if not snip.c:
+	width = int(vim.eval("&textwidth - (virtcol('.') == 1 ? 0 : virtcol('.'))")) or 71
+box = make_box(len(t[1]), width)
+snip.rv = box[0] `$1
+$0
+endsnippet
+
+snippet sig "signature" i
+`!p
+if not snip.c:
+	width = int(vim.eval("&textwidth - (virtcol('.') == 1 ? 0 : virtcol('.'))")) or 71
+box = make_box(len(t[1]), width)
+snip.rv = box[1]`Author: HanYuyang
+`!p 
+snip.rv = box[1]`Date  : `!v strftime("%Y-%m-%d")`$1
+
+$0
+endsnippet
+
 snippet fold "Insert a vim fold marker" b
 `!p snip.rv = get_comment_format()[0]` ${1:Fold description} `!p snip.rv = foldmarker()[0]`${2:1} `!p snip.rv = get_comment_format()[2]`
 endsnippet

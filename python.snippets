@@ -47,8 +47,8 @@ import matplotlib.pyplot as plt
 # plt.rcParams['axes.unicode_minus'] = False
 # plt.rcParams["mathtext.default"]='regular'
 # plt.rcParams['font.sans-serif']=['Songti SC']
-fig, axs = pplt.subplots(ncols=1, nrows=1, figwidth=5,
-                         journal='pnas1', )
+fig, axs = pplt.subplots(ncols=1, nrows=1, # figwidth=5,
+                         journal='nat2', )
 axs.format(
     suptitle='', xlabel='xlabel', ylabel='ylabel', abc=True,
 )
@@ -61,9 +61,8 @@ pplt.rc['reso'] = 'lo'  # 'lo', 'med', 'hi', 'x-hi', or 'xx-hi'
 # plt.rcParams['axes.unicode_minus'] = False
 # plt.rcParams["mathtext.default"]='regular'
 # plt.rcParams['font.sans-serif']=['Songti SC']
-fig, axs = pplt.subplots(ncols=1, nrows=1,
-                         journal='pnas1', proj=proj,)
-
+fig, axs = pplt.subplots(ncols=1, nrows=1, proj=proj, # figwidth=5,
+                         journal='nat2', )
 endsnippet
 
 snippet latlon "lat lon grid set" b
