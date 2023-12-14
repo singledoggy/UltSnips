@@ -55,6 +55,34 @@ axs.format(
 endsnippet
 
 snippet geofig "geofig" b
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+# from cnmaps import draw_map, get_adm_maps
+# china_map = get_adm_maps(level="省", engine="geopandas")
+# plt.rcParams['axes.unicode_minus'] = False
+# plt.rcParams["mathtext.default"]='regular'
+# plt.rcParams['font.sans-serif']=['Songti SC']
+fig, axs = plt.subplots(ncols=1, nrows=1, subplot_kw={"projection": crs})
+
+$1
+
+# china_map.plot(ax=axs, edgecolor="black", facecolor="none", transform=crs, linewidth=0.5)
+gl = axs.gridlines(
+    draw_labels=True,
+    x_inline=False,
+    y_inline=False,
+    color="k",
+    linestyle="dotted",
+    zorder=4,
+    transform=crs,
+)
+gl.top_labels = gl.right_labels = False
+gl.rotate_labels = False
+
+endsnippet
+
+
+snippet gpplt "gpplt" b
 import proplot as pplt
 import matplotlib.pyplot as plt
 pplt.rc['reso'] = 'lo'  # 'lo', 'med', 'hi', 'x-hi', or 'xx-hi'
@@ -98,7 +126,12 @@ fig.save('./figure/.pdf')
 endsnippet
 
 snippet xr.open_mfdataset "expand" i
-xr.open_mfdataset(paths, combine='by_coords')
+xr.open_mfdataset(paths, 
+    concat_dim="Time",
+    combine="nested",
+    chunks={"Time": 24},
+    decode_times=False,
+	)
 endsnippet
 
 snippet xr.save_mfdataset "expand" i
