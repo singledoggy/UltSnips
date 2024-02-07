@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 from dask.distributed import Client
-client = Client(n_workers=16, threads_per_worker=1, memory_limit="8GB")
+client = Client(n_workers=32, threads_per_worker=1, memory_limit="2GB")
 client
 endsnippet
 
@@ -85,13 +85,50 @@ endsnippet
 snippet gfig "gfig" b
 import proplot as pplt
 import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
 # pplt.rc['reso'] = 'lo'  # 'lo', 'med', 'hi', 'x-hi', or 'xx-hi'
 # plt.rcParams['axes.unicode_minus'] = False
 # plt.rcParams["mathtext.default"]='regular'
 # plt.rcParams['font.sans-serif']=['Songti SC']
-fig, axs = pplt.subplots(ncols=1, nrows=1, proj=proj, # figwidth=5,
+crs =ccrs.PlateCarree()
+fig, axs = pplt.subplots(ncols=1, nrows=1, proj=crs, # figwidth=5,
                          journal='nat2', )
+
 endsnippet
+
+snippet cnmap "cnmap" b
+from cnmaps import draw_map, get_adm_maps
+china_map = get_adm_maps(level="省", engine="geopandas")
+extents_main = [70, 140, 10, 60]
+extents_sub = [105, 120, 2, 25]
+lon_min, lon_max, lat_min, lat_max = extents_main
+axs.format(
+    lonlim=(lon_min, lon_max),
+    latlim=(lat_min, lat_max),
+    lonlabels="b",
+    latlabels="l",
+    abc=True,
+)
+for ax in axs:
+    ax.add_geometries(
+        china_map.geometry,
+        crs=crs,
+        facecolor="none",
+        edgecolor="black",
+        linewidth=0.5,
+    )
+    ax_sub = ax.inset_axes([0.825, 0, 0.235, 0.235], projection=crs)
+    ax_sub.set_extent(extents_sub)
+    ax_sub.add_geometries(
+        china_map.geometry,
+        crs=crs,
+        facecolor="none",
+        edgecolor="black",
+        linewidth=0.5,
+    )
+    ax_sub.format(grid=False)
+endsnippet
+
 
 snippet latlon "lat lon grid set" b
 gl = ax.gridlines(draw_labels=True,
