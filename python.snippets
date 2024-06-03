@@ -1,18 +1,23 @@
 snippet ipdb "ipdb" bA
 import ipdb; ipdb.set_trace()
 endsnippet
+
 snippet	warning "warning" bA
 import warnings
 warnings.filterwarnings('ignore')
 endsnippet
 
 snippet ini "pd" b
+# %%
 import numpy as np
 import pandas as pd
 import xarray as xr
 from dask.distributed import Client
-client = Client(n_workers=32, threads_per_worker=1)
+client = Client(n_workers=${1:32}, threads_per_worker=1)
 client
+# %%
+$2
+# %%
 endsnippet
 
 snippet picklesave "picklesave" b
@@ -162,11 +167,11 @@ fig.save('./figure/.pdf')
 endsnippet
 
 snippet xr.open_mfdataset "expand" i
-xr.open_mfdataset(paths, 
-    concat_dim="Time",
+xr.open_mfdataset(
+	paths, 
+    concat_dim="time",
     combine="nested",
-    chunks={"Time": 24},
-    decode_times=False,
+	parallel=True,
 	)
 endsnippet
 
